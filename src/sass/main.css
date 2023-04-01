@@ -1,0 +1,33 @@
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.search-form {
+  display: flex;
+  justify-content: center;
+}
+
+.gallery {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.photo-card {
+  width: calc(100% / 4 - 60px);
+}
+
+.photo-card > img {
+  display: block;
+  width: 100%;
+}
+
+.load-more {
+    visibility: hidden;
+  /* display: none; */
+  /* display: inline-block;
+  margin: 0 auto; */
+}
+
