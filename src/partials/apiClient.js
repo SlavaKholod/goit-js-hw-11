@@ -1,17 +1,5 @@
 const axios = require('axios').default;
 
-// const options = {
-//   headers: {
-//     metod: 'GET',
-//     'Access-Control-Allow-Origin': 'http://localhost:1234',
-//     key: KEY,
-//     image_type: 'photo',
-//     orientation: 'horizontal',
-//     mode: 'no-cors',
-//     q: keyWord,
-//   },
-// };
-
 export default class ImgApi {
   constructor() {
     this.keyWord = '';
@@ -19,17 +7,17 @@ export default class ImgApi {
     this.BASE_URL = 'https://pixabay.com/api/';
     this.dataList = null;
     this.page = 1;
+    this.totalHits = null;
   }
 
   async getImg() {
     const url = `${this.BASE_URL}?key=${this.KEY}&q=${this.keyWord}&image_type=photo&orientation=horizontal&safesearch=true&per_page=40&page=${this.page}`;
     try {
-      this.dataList = await axios
-        .get(`${url}`)
-        .then(response => {
-          this.incrementPage();
-          return response.data.hits
-        });
+      this.dataList = await axios.get(`${url}`).then(response => {
+        this.incrementPage();
+        this.totalHits = response.data.total;
+        return response.data.hits;
+      });
 
       return await this.filteredParms(this.dataList);
     } catch (error) {
@@ -63,8 +51,8 @@ export default class ImgApi {
   incrementPage() {
     this.page += 1;
   }
-  
-  resetPage(){
-    this.page =1;
+
+  resetPage() {
+    this.page = 1;
   }
 }
