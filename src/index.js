@@ -3,8 +3,14 @@ import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
 import ImgApi from './partials/apiClient';
-import refs from './partials/refs';
+// import refs from './partials/refs';
 import markupTemplate from './partials/card.hbs';
+
+const refs = {
+  searchForm: document.querySelector('#search-form'),
+  contentSection: document.querySelector('.gallery'),
+  loadMore: document.querySelector('.load-more'),
+};
 
 const ImgLoadApi = new ImgApi();
 
