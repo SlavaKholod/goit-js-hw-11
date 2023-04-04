@@ -17,10 +17,9 @@ var lightbox = new SimpleLightbox('.gallery__link', {
 refs.searchForm.addEventListener('submit', onSerch);
 refs.loadMore.addEventListener('click', onLoadMore);
 
-function onSerch(event) {
+async function onSerch(event) {
   event.preventDefault();
-  clearMarkup();
-  ImgLoadApi.resetPage();
+  onSerchRefresh();
 
   const {
     elements: { searchQuery },
@@ -28,7 +27,11 @@ function onSerch(event) {
 
   ImgLoadApi.keyWord = searchQuery.value.trim();
 
-  ImgLoadApi.getImg(ImgLoadApi.keyWord).then(data => {
+  if (ImgLoadApi.keyWord === "") {
+    Notify.info("Please input some request");
+    return;
+  }
+  const data = await ImgLoadApi.getDataList(ImgLoadApi.keyWord);
     if (data.length === 0) {
       refs.loadMore.style.visibility = 'hidden';
       Notify.failure(
@@ -41,18 +44,16 @@ function onSerch(event) {
         refs.loadMore.style.visibility = 'visible';
       }
     }
-  });
   refs.searchForm.reset();
 }
 
-function onLoadMore() {
-  ImgLoadApi.getImg().then(data => {
+async function onLoadMore() {
+  const data = await ImgLoadApi.getDataList();
     addMarkup(data);
     if (data.length < 40) {
       Notify.info("We're sorry, but you've reached the end of search results.");
       refs.loadMore.style.visibility = 'hidden';
     }
-  });
 }
 
 function addMarkup(data) {
@@ -64,10 +65,6 @@ function addMarkup(data) {
   smoothScrol();
 }
 
-function clearMarkup() {
-  refs.contentSection.innerHTML = '';
-}
-
 function smoothScrol() {
   const { height: cardHeight } = document
     .querySelector('.gallery')
@@ -77,4 +74,9 @@ function smoothScrol() {
     top: cardHeight * 2,
     behavior: 'smooth',
   });
+}
+
+function onSerchRefresh() {
+  refs.contentSection.innerHTML = '';
+  ImgLoadApi.resetPage();
 }
