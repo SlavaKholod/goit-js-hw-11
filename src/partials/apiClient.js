@@ -10,21 +10,6 @@ export default class ImgApi {
     this.totalHits = null;
   }
 
-  // async getImg() {
-  //   const url = `${this.BASE_URL}?key=${this.KEY}&q=${this.keyWord}&image_type=photo&orientation=horizontal&safesearch=true&per_page=40&page=${this.page}`;
-  //   try {
-  //     this.dataList = await axios.get(`${url}`).then(response => {
-  //       this.incrementPage();
-  //       this.totalHits = response.data.total;
-  //       return response.data.hits;
-  //     });
-
-  //     return await this.filteredParms(this.dataList);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // }
-
   async getImg() {
     const url = `${this.BASE_URL}?key=${this.KEY}&q=${this.keyWord}&image_type=photo&orientation=horizontal&safesearch=true&per_page=40&page=${this.page}`;
     return await axios.get(`${url}`);
@@ -36,7 +21,6 @@ export default class ImgApi {
       this.incrementPage();
       this.totalHits = response.data.total;
       this.dataList = response.data.hits;
-      // console.log(this.dataList);
       return await this.filteredParms(this.dataList);
 
     } catch (error) {
