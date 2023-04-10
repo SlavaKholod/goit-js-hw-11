@@ -12,13 +12,13 @@ export default class ImgApi {
 
   async getImg() {
     const url = `${this.BASE_URL}?key=${this.KEY}&q=${this.keyWord}&image_type=photo&orientation=horizontal&safesearch=true&per_page=40&page=${this.page}`;
+    this.incrementPage();
     return await axios.get(`${url}`);
   }
 
   async getDataList() {
     try {
       const response = await this.getImg(this.keyWord);
-      this.incrementPage();
       this.totalHits = response.data.total;
       this.dataList = response.data.hits;
       return await this.filteredParms(this.dataList);

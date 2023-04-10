@@ -46,9 +46,9 @@ async function onSerch(event) {
     } else {
       addMarkup(data);
       Notify.info(`Hooray! We found ${ImgLoadApi.totalHits} images.`);
-      if (data.length === 40) {
-        // refs.loadMore.style.visibility = 'visible';
-      }
+      // if (data.length === 40) {
+      //   refs.loadMore.style.visibility = 'visible';
+      // }
     }
     refs.searchForm.reset();
   } catch (error) {
@@ -103,7 +103,7 @@ window.addEventListener(
     () => {
       console.log('crhjk');
       const documentRect = document.documentElement.getBoundingClientRect();
-      if (documentRect.bottom < document.documentElement.clientHeight + 300) {
+      if (documentRect.bottom < document.documentElement.clientHeight + 150) {
         onLoadMore();
       }
     },
@@ -122,7 +122,7 @@ AOS.init({
   useClassNames: false, // if true, will add content of `data-aos` as classes on scroll
   disableMutationObserver: false, // disables automatic mutations' detections (advanced)
   debounceDelay: 50, // the delay on debounce used while resizing window (advanced)
-  throttleDelay: 99, // the delay on throttle used while scrolling the page (advanced)
+  throttleDelay: 100, // the delay on throttle used while scrolling the page (advanced)
 
   // Settings that can be overridden on per-element basis, by `data-aos-*` attributes:
   offset: 50, // offset (in px) from the original trigger point
